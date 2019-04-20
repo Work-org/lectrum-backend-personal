@@ -1,30 +1,23 @@
 // Core
-import { model } from 'mongoose';
-import { baseSchema } from './_base';
+import { Schema } from 'mongoose';
 
-// Document shape
-const schema = baseSchema.clone();
-schema.add({
-    name: {
-        first: String,
-        last:  String,
-    },
-    emails: [
-        {
-            email:   String,
-            primary: Boolean,
-        },
-    ],
-    phones: [
-        {
-            phone:   String,
-            primary: Boolean,
-        },
-    ],
+// Instruments
+import { user, userOptions } from './user';
+
+const schema = Schema({
     password: String,
-    role:     String,
+    role:     {
+        type:     String,
+        required: true,
+    },
     disabled: Boolean,
+}, {
+    ...userOptions,
+    toObject: {
+        transform: function(doc, ret) {
+            delete ret.password;
+        },
+    },
 });
 
-// Collection
-export const staff = model('staff', schema);
+export const staff = user.discriminator('staff', schema);

@@ -10,8 +10,13 @@ module.exports.hashPlugin = (schema, options) => {
     }
 
     schema.add({
-        hash: String,
+        hash: {
+            type:     String,
+            required: true,
+        },
     });
+
+    schema.index({ hash: 1});
 
     schema.pre('save', function(next) {
         this.hash = uuid[ version ]();

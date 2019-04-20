@@ -19,10 +19,13 @@ const base = new Schema({
         getters:   true,
         transform: function(doc, ret) {
             delete ret._id;
+            delete ret.__v;
         },
     },
-    versionKey: false,
-    collation:  { locale: 'en_US', numericOrdering: true },
+
+    // bug https://github.com/Automattic/mongoose/issues/7458
+    // versionKey: false,
+    collation: { locale: 'en_US', numericOrdering: true },
 });
 
 base.plugin(autopopulatePlugin);

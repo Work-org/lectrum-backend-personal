@@ -1,8 +1,16 @@
 // Core
-import { Schema, model } from 'mongoose';
+import { Schema } from 'mongoose';
 
-// Document shape
-const schema = new Schema({});
+// Instruments
+import { user, userOptions } from './user';
 
-// Collection
-export const customers = model('customer', schema);
+const schema = new Schema({
+    city:     String,
+    country:  String,
+    password: String,
+}, userOptions);
+
+schema.index({ country: 1, city: 1});
+schema.index({ country: 'text', city: 'text'});
+
+export const customers = user.discriminator('customer', schema);

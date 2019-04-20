@@ -2,16 +2,16 @@
 import dg from 'debug';
 
 // Instruments
-import { Staff } from '../../controllers';
+// import { Staff } from '../../controllers';
 
 const debug = dg('router:auth');
 
-export const post = async (req, res) => {
+export const post = (req, res) => {
     debug(`${req.method} — ${req.originalUrl}`);
 
     try {
         if (!req.headers.authorization) {
-            throw new Error('credentials are not valid');
+            res.status(401).json({ message: 'credentials are not valid' });
         }
 
         const [ , credentials ] = req.headers.authorization.split(' ');
@@ -19,10 +19,11 @@ export const post = async (req, res) => {
             .toString()
             .split(':');
 
-        const staff = new Staff({ email, password });
-        const hash = await staff.login();
+        // const staff = new Staff({ email, password });
+        // const hash = await staff.login();
 
-        req.session.user = { hash };
+        // req.session.user = { hash };
+        req.session.user = { email, password };
         res.sendStatus(204);
     } catch (error) {
         res.status(401).json({ message: error.message });

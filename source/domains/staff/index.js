@@ -10,5 +10,5 @@ export const get = (req, res) => {
 
 export const post = (req, res) => {
     debug('post');
-    res.status(200).json({ data: {} });
+    res.status(200).json({ });
 };

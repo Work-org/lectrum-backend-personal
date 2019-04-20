@@ -13,5 +13,45 @@
     ],
     "plugins": [
         ["@babel/plugin-proposal-class-properties", { "loose": false }]
-    ]
+    ],
+    "env": {
+        "test": {
+            "presets": [
+                [
+                    "@babel/preset-env",
+                    {
+                        "targets": {
+                            "node": "current"
+                        },
+                        "modules": false,
+                        "spec": true
+                    }
+                ]
+            ],
+            "plugins": [
+                [
+                    "@babel/plugin-transform-modules-commonjs",
+                    {
+                        "spec": true
+                    }
+                ],
+                [
+                    "@babel/plugin-proposal-class-properties",
+                    {
+                        "loose": false
+                    }
+                ],
+                [
+                    "@babel/plugin-transform-runtime",
+                    {
+                        "absoluteRuntime": false,
+                        "corejs": false,
+                        "helpers": true,
+                        "regenerator": true,
+                        "useESModules": false
+                    }
+                ]
+            ]
+        }
+    }
 }

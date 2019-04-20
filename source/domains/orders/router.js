@@ -6,12 +6,12 @@ import * as handlers from './';
 
 const route = express.Router();
 
-route.get('/orders', handlers.get);
-route.post('/orders', handlers.post);
+route.get('/', handlers.get);
+route.post('/', handlers.post);
 
 
-route.get('/orders/:hash', handlers.getOrder);
-route.put('/orders/:hash', handlers.putOrder);
-route.delete('/orders/:hash', handlers.deleteOrder);
+route.get('/:hash', handlers.getOrder);
+route.put('/:hash', handlers.putOrder);
+route.delete('/:hash', handlers.deleteOrder);
 
-export { route as orders }
+export { route as orders };

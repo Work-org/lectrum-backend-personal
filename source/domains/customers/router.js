@@ -6,11 +6,11 @@ import * as handlers from './';
 
 const route = express.Router();
 
-route.get('/customers', handlers.get);
-route.post('/customers', handlers.post);
+route.get('/', handlers.get);
+route.post('/', handlers.post);
 
-route.get('/customers/:hash', handlers.getCustomer);
-route.put('/customers/:hash', handlers.putCustomer);
-route.delete('/customers/:hash', handlers.deleteCustomer);
+route.get('/:hash', handlers.getCustomer);
+route.put('/:hash', handlers.putCustomer);
+route.delete('/:hash', handlers.deleteCustomer);
 
 export { route as customers };

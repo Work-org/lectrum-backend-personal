@@ -1,5 +1,5 @@
 export const requireJsonContent = (req, res, next) => {
-    if (req.method === 'GET') {
+    if ([ 'GET', 'DELETE', 'OPTIONS', 'HEADER' ].includes(req.method)) {
         return next();
     }
 

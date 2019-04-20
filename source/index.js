@@ -1,3 +1,5 @@
+require('module-alias/register');
+
 // Core
 import dg from 'debug';
 

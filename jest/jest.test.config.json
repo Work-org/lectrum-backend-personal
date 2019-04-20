@@ -7,7 +7,11 @@
     "bail": false,
     "collectCoverage": true,
     "collectCoverageFrom": ["<rootDir>/source/**/*.js"],
-    "coveragePathIgnorePatterns": [],
+    "coveragePathIgnorePatterns": [
+        "<rootDir>/source/index.js",
+        "<rootDir>/source/server.js",
+        "<rootDir>/source/helpers"
+    ],
     "coverageThreshold": {
         "global": {
             "branches": 85,
@@ -18,7 +22,11 @@
     },
     "modulePaths": ["<rootDir>/source", "<rootDir>/node_modules"],
     "moduleFileExtensions": ["js", "json"],
+    "moduleNameMapper": {
+        "_@(.*)$": "<rootDir>/$1"
+    },
     "globalSetup": "<rootDir>/jest/scripts/globalSetup.js",
     "globalTeardown": "<rootDir>/jest/scripts/globalTeardown.js",
+    "testEnvironment": "<rootDir>/jest/scripts/testEnvironment.js",
     "testURL": "http://www.test.com"
 }

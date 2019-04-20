@@ -2,7 +2,7 @@
 import dg from 'debug';
 
 // Instruments
-// import { Staff } from '../../controllers';
+import { Staff } from '../../controllers';
 
 const debug = dg('router:auth');
 

@@ -4,7 +4,7 @@ import autopopulatePlugin from 'mongoose-autopopulate';
 import leanVirtualPlugin from 'mongoose-lean-virtuals';
 
 // Instrument
-import { hashPlugin } from '_@sourse/plugins';
+import { hashPlugin } from '_@source/plugins';
 
 // Document shape
 const base = new Schema({

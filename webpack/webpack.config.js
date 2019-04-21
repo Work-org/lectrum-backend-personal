@@ -2,7 +2,7 @@
 import excludeNodeModules from 'webpack-node-externals';
 
 // Presets
-import { entry, build, root } from './paths';
+import { entry, build } from './paths';
 
 // Instruments
 import merge from 'webpack-merge';
@@ -16,11 +16,6 @@ export default merge(
         output: {
             path:     build,
             filename: 'index.js',
-        },
-        resolve: {
-            alias: {
-                '@': root,
-            },
         },
         externals: [ excludeNodeModules() ],
         module:    {

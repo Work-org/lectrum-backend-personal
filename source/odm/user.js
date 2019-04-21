@@ -38,6 +38,13 @@ schema.add({
             primary: { type: Boolean, default: false },
         },
     ],
+    password: String,
+});
+
+schema.set('toObject', {
+    transform: function(doc, ret) {
+        delete ret.password;
+    },
 });
 
 schema.set('discriminatorKey', userOptions.discriminatorKey);

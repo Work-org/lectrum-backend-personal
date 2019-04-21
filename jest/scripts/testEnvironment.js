@@ -30,7 +30,7 @@ class CustomEnvironment extends NodeEnvironment {
             callback(response); // for test authorize
             const cookie = response.headers[ 'set-cookie' ][ 0 ];
 
-            server.jar.setCookie(cookie);
+            this.global.server.jar.setCookie(cookie);
         };
     }
 

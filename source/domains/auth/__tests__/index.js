@@ -1,7 +1,7 @@
 // Instruments
-import { getCreateResult } from '_@/jest/helpers';
 import request from 'supertest';
-import { app } from '_@/source/server.js';
+import { app } from '_@source/server.js';
+import { getCreateResult } from '_@/jest/helpers';
 
 const server = request.agent(app);
 const credBasic = 'Basic ZW1haWw6cGFzc3dvcmQ='; // email:password

@@ -12,6 +12,9 @@
     "engines": {
         "node": "10.x"
     },
+    "_moduleAliases": {
+        "_@source": "source"
+    },
     "license": "MIT",
     "devDependencies": {
         "@babel/core": "^7.4.3",
@@ -68,8 +71,5 @@
         "swagger-ui-express": "^4.0.2",
         "uuid": "^3.3.2",
         "winston": "^3.2.1"
-    },
-    "_moduleAliases": {
-        "_@sourse": "source"
     }
 }

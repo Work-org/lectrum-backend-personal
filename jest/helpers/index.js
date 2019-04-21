@@ -6,8 +6,8 @@ const getCreateResult = (response) => {
     return response.body || null;
 };
 
-const authorize = (done) => {
-    global.authorize((response) => {
+const authorize = async (done) => {
+    await global.authorize((response) => {
         expect(response.statusCode).toBe(204);
     });
     done();

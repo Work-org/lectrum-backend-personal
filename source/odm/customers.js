@@ -5,12 +5,11 @@ import { Schema } from 'mongoose';
 import { user, userOptions } from './user';
 
 const schema = new Schema({
-    city:     String,
-    country:  String,
-    password: String,
+    city:    String,
+    country: String,
 }, userOptions);
 
 schema.index({ country: 1, city: 1});
 schema.index({ country: 'text', city: 'text'});
 
-export const customers = user.discriminator('customer', schema);
+export const customers = user.discriminator('customers', schema);

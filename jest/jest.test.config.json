@@ -28,5 +28,6 @@
     "globalSetup": "<rootDir>/jest/scripts/globalSetup.js",
     "globalTeardown": "<rootDir>/jest/scripts/globalTeardown.js",
     "testEnvironment": "<rootDir>/jest/scripts/testEnvironment.js",
+    "setupFilesAfterEnv": ["<rootDir>/jest/scripts/setupFilesAfterEnv.js"],
     "testURL": "http://www.test.com"
 }

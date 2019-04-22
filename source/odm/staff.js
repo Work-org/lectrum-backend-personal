@@ -10,6 +10,16 @@ const schema = Schema({
         required: true,
     },
     disabled: Boolean,
-}, userOptions);
+}, {
+    ... userOptions,
+    toObject: {
+        transform: function(doc, ret) {
+            delete ret._id;
+            delete ret._usr;
+            delete ret.password;
+            delete ret.disabled;
+        },
+    },
+});
 
 export const staff = user.discriminator('staff', schema);

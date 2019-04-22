@@ -12,7 +12,6 @@ module.exports.hashPlugin = (schema, options) => {
     schema.add({
         hash: {
             type:     String,
-            required: true,
         },
     });
 

@@ -2,7 +2,7 @@
 import dg from 'debug';
 
 // Instruments
-import { Staff } from '../../controllers';
+// import { Staff } from '../../controllers';
 
 const debug = dg('router:auth');
 
@@ -10,7 +10,6 @@ export const post = (req, res) => {
     debug(`${req.method} — ${req.originalUrl}`);
 
     try {
-        console.log('-->', req.headers.authorization);
         if (!req.headers.authorization) {
             res.status(401).json({ message: 'credentials are not valid' });
         }

@@ -43,7 +43,10 @@ schema.add({
 
 schema.set('toObject', {
     transform: function(doc, ret) {
+        delete ret._id;
+        delete ret._usr;
         delete ret.password;
+        delete ret.disabled;
     },
 });
 

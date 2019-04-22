@@ -81,6 +81,20 @@ if (process.env.NODE_ENV !== 'test') {
 
         debug(`Error: ${errorMessage}`);
 
+        /*switch (error.name) {
+            case 'NotFoundError':
+                notFoundLogger.error(errorMessage);
+                break;
+
+            case 'ValidationError':
+                validationLogger.error(errorMessage);
+                break;
+
+            default:
+                errorLogger.error(errorMessage);
+                break;
+        }*/
+
         const status = statusCode ? statusCode : 500;
         res.status(status).json({ message: message });
     });

@@ -7,16 +7,20 @@ export class Staff {
         };
     }
 
-    async register () {
+    async register() {
         const hash = await this.models.staff.register();
 
         return { data: { hash } };
     }
 
     async login() {
-        const data = await this.models.staff.login();
+        try {
+            const hash = await this.models.staff.login();
 
-        return data;
+            return hash;
+        } catch (error) {
+            throw error;
+        }
     }
 
     async readStaff() {

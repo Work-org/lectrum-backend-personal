@@ -6,7 +6,9 @@
     "notify": true,
     "bail": false,
     "collectCoverage": false,
-    "collectCoverageFrom": ["<rootDir>/source/**/*.js"],
+    "collectCoverageFrom": [
+        "<rootDir>/source/**/*.js"
+    ],
     "coveragePathIgnorePatterns": [
         "<rootDir>/source/index.js",
         "<rootDir>/source/server.js",
@@ -20,8 +22,14 @@
             "statements": 85
         }
     },
-    "modulePaths": ["<rootDir>/source", "<rootDir>/node_modules"],
-    "moduleFileExtensions": ["js", "json"],
+    "modulePaths": [
+        "<rootDir>/source",
+        "<rootDir>/node_modules"
+    ],
+    "moduleFileExtensions": [
+        "js",
+        "json"
+    ],
     "moduleNameMapper": {
         "^_@(.*)$": "<rootDir>/$1"
     },

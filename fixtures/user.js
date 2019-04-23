@@ -1,6 +1,6 @@
 // DB_NAME from env
-// use {{DB_NAME}}}
-use backend_personal;
+// use {{DB_NAME}}} environment
+use backend_test;
 
 // upload to clear db
 db.users.drop();

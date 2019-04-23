@@ -1,9 +1,9 @@
 // Instruments
 import { getData, getCreateResult, authorize } from '_@jest/helpers';
 
-describe('customers test', () => {
-    beforeAll(authorize);
+beforeAll(authorize);
 
+describe('customers test', () => {
     test(' GET    customers      ', async (done) => {
         const response = await global.server.get('/api/customers');
         expect(response.statusCode).toBe(200);

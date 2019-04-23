@@ -14,7 +14,7 @@ export class Staff {
         if (!password) {
             throw new Error('password not filled');
         }
-console.log('-->', name);
+
         const [ first, last ] = name.split(' ');
         const hashedPassword = await bcrypt.hash(password, 11);
         const { hash } = await staff.create({
@@ -30,18 +30,22 @@ console.log('-->', name);
 
     async login() {
         const { email, password } = this.data;
-        const { password: userPassword } = await staff
-            .findOne({ email })
+        const user = await staff
+            .findOne({ emails: {$elemMatch: { email, primary: true }} })
             .select('password hash')
             .lean();
 
-        const match = await bcrypt.compare(password, userPassword);
+        if (!user) {
+            return null;
+        }
+
+        const match = await bcrypt.compare(password, user.password);
 
         if (!match) {
             throw new Error('Credentials are not valid');
         }
 
-        return true;
+        return user.hash;
     }
 
     async getStaffs () {

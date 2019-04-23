@@ -28,7 +28,7 @@ export const post = async (req, res) => {
         const staff = new Staff(data);
         const newStaff = await staff.register();
         debug(`new staff [${newStaff.data.hash}] created`);
-        res.status(200).json(newStaff);
+        res.status(201).json(newStaff);
     } catch (error) {
         res.status(500).json({ message: error.message, stack: error.stack });
     }

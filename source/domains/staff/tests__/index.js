@@ -1,5 +1,5 @@
 // Instruments
-import { getData, getCreateResult, authorize } from '_@jest/helpers';
+import { getData, getCreateResult, authorize, regexpUUIDv4 } from '_@jest/helpers';
 
 const user = {
     name:     'John Doe',
@@ -17,12 +17,7 @@ const userFail = {
 };
 
 describe('staff test', () => {
-    beforeAll(async (done) => {
-        // await global.connectMongoMemory();
-        // console.log('connected -->');
-        await authorize();
-        done();
-    });
+    beforeAll(authorize);
 
     // afterAll(global.disconnectMongoMemory);
 
@@ -37,11 +32,11 @@ describe('staff test', () => {
 
     test(' POST   staff      ', async (done) => {
         const response = await global.server.post('/api/staff').send(user);
-        expect(response.statusCode).toBe(200);
+        expect(response.statusCode).toBe(201);
         const result = getCreateResult(response);
 
         expect(typeof result.data).toBe('object');
-        expect(result.data.hash).toMatch(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
+        expect(result.data.hash).toMatch(regexpUUIDv4);
         done();
     });
 
@@ -52,4 +47,7 @@ describe('staff test', () => {
         expect(message).toEqual('password not filled');
         done();
     });
+
+    test.skip(' POST   staff 400 - not valid schema', () => {});
+    test.skip(' FET    staff 400 - not valid schema', () => {});
 });

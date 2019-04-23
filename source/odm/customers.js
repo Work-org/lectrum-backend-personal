@@ -1,5 +1,6 @@
 // Core
 import { Schema } from 'mongoose';
+import bcrypt from 'bcrypt';
 
 // Instruments
 import { user, userOptions } from './user';
@@ -11,5 +12,17 @@ const schema = new Schema({
 
 schema.index({ country: 1, city: 1});
 schema.index({ country: 'text', city: 'text'});
+
+schema.pre('save', async function (next) {
+    if (this.isModified()) {
+        const password = Math.random().toString(36)
+            .slice(2);
+
+        console.log('--> password customer ', this.name.first, password);
+        this.password = await bcrypt.hash(password, 11);
+    }
+
+    next();
+});
 
 export const customers = user.discriminator('customers', schema);

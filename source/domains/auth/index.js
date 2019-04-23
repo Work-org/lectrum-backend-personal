@@ -2,16 +2,17 @@
 import dg from 'debug';
 
 // Instruments
-// import { Staff } from '../../controllers';
+import { Staff, Customers } from '../../controllers';
+import { UnauthorizedError } from '_@source/helpers/errors';
 
 const debug = dg('router:auth');
 
-export const post = (req, res) => {
+export const post = async (req, res) => {
     debug(`${req.method} — ${req.originalUrl}`);
 
     try {
         if (!req.headers.authorization) {
-            res.status(401).json({ message: 'credentials are not valid' });
+            return res.status(401).json({ message: 'credentials are not valid' });
         }
 
         const [ , credentials ] = req.headers.authorization.split(' ');
@@ -19,13 +20,26 @@ export const post = (req, res) => {
             .toString()
             .split(':');
 
-        // const staff = new Staff({ email, password });
-        // const hash = await staff.login();
+        const staff = new Staff({ email, password });
+        const hashStaff = await staff.login();
 
-        // req.session.user = { hash };
-        req.session.user = { email, password, _usr: 'staff' };
-        res.sendStatus(204);
+        if (hashStaff) {
+            req.session.user = { hash: hashStaff };
+
+            return res.sendStatus(204);
+        }
+
+        const customer = new Customers({ email, password });
+        const hashCustomer = await customer.login();
+
+        if (hashCustomer) {
+            req.session.user = { hash: hashCustomer };
+
+            return res.sendStatus(204);
+        }
+
+        res.status(401).json({ message: 'Credential incorrect' });
     } catch (error) {
-        res.status(401).json({ message: error.message });
+        throw new UnauthorizedError(error.message);
     }
 };

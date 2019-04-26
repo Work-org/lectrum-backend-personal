@@ -8,7 +8,6 @@ const getCreateResult = (response) => {
 
 const authorize = async (done) => {
     await global.authorize((response) => {
-        console.log('-->', response.statusCode);
         expect(response.statusCode).toBe(204);
     });
     done();

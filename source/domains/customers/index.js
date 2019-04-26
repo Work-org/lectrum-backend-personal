@@ -2,18 +2,19 @@
 import dg from 'debug';
 
 // Instruments
-import { Customers } from '_@source/controllers';
+import { User } from '_@source/controllers';
 import { BadRequestError, ForbiddenError } from '_@source/helpers/errors';
 
 const debug = dg('router:customer');
 
 export const get = async (req, res) => {
     try {
-        const customers = new Customers();
+        const customers = new User().as('customer');
         const data = await customers.getCustomers();
 
         res.status(200).json(data);
     } catch (error) {
+        debug(error.message);
         res.status(500).json({ message: error.message, stack: error.stack });
     }
 };
@@ -25,41 +26,47 @@ export const post = async (req, res) => {
     }
 
     try {
-        const customers = new Customers(args);
+        const customers = new User(args).as('customer');
         const data = await customers.createCustomer();
 
         res.status(201).json(data);
     } catch (error) {
+        debug(error.message);
         res.status(500).json({ message: error.message, stack: error.stack });
     }
 };
 
 export const getCustomer = async (req, res) => {
     const { hash } = req.params;
-    const {_usr, hash: hashUser } = req.user;
+    const { hash: hashUser } = req.session.user;
+    const customers = new User().as('customer');
 
-    if (!hash) {
+    if (!hash || [ 'null', 'undefined' ].includes(hash)) {
         throw new BadRequestError('Parameters hash error');
     }
 
-    if (_usr !== 'customer' || hash !== hashUser) {
+    // Check to auth customer
+    const user = customers.getUser(hashUser);
+    if (!user || hash !== hashUser) {
+        debug('access denied to not customer record');
         throw new ForbiddenError('Access denied');
     }
 
     try {
-        const customers = new Customers();
         const data = await customers.getCustomer(hashUser);
 
         res.status(200).json(data);
     } catch (error) {
+        debug(error.message);
         res.status(500).json({ message: error.message, stack: error.stack });
     }
 };
 
 export const putCustomer = async (req, res) => {
-    const {_usr, hash: hashUser } = req.user;
+    const { hash: hashUser } = req.session.user;
     const { hash } = req.params;
     const args = req.body;
+    const customers = new User().as('customer');
 
     if (!args) {
         throw new BadRequestError('Empty data customers');
@@ -69,48 +76,49 @@ export const putCustomer = async (req, res) => {
         throw new BadRequestError('Parameters hash error');
     }
 
-    if (_usr !== 'customer' || hash !== hashUser) {
+    const user = await customers.getUser(hashUser);
+    if (!user || hash !== hashUser) {
+        debug('It\'s not you');
         throw new ForbiddenError('It\'s not you');
     }
 
     try {
-        const customers = new Customers();
+        customers.setData(user);
         const data = await customers.updateCustomer(hashUser);
 
         res.status(200).json(data);
     } catch (error) {
+        debug(error.message);
         res.status(500).json({ message: error.message, stack: error.stack });
     }
 };
 
 export const deleteCustomer = async (req, res) => {
-    debug('delete');
-    res.sendStatus(204);
-
-    const {_usr, hash: hashUser } = req.user;
+    const { hash: hashUser } = req.session.user;
     const { hash } = req.params;
+    const customers = new User().as('customer');
 
     if (!hash) {
         throw new BadRequestError('Parameters hash error');
     }
 
-    if (_usr !== 'customer' || hash !== hashUser) {
+    const user = customers.getUser(hashUser);
+    if (!user || hash !== hashUser) {
         throw new ForbiddenError('It\'s not you');
     }
 
     try {
-        const customers = new Customers();
         const customer = await customers.removeCustomer(hash);
 
         if (customer) {
             res.sendStatus(204);
-
-            //@todo remove session?
             req.user = null;
         } else {
+            debug('Delete error');
             res.status(500).json({ message: 'Delete error' });
         }
     } catch (error) {
+        debug(error.message);
         res.status(500).json({ message: error.message, stack: error.stack });
     }
 };

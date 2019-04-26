@@ -1,2 +1,1 @@
-export { Staff } from './staff';
-export { Customers } from './customers';
+export { User } from './user';

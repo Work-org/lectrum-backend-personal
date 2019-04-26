@@ -2,14 +2,14 @@
 import dg from 'debug';
 
 // Instrument
-import { Staff } from '_@source/controllers';
+import { User } from '_@source/controllers';
 import { BadRequestError } from '_@source/helpers/errors';
 
 const debug = dg('router:staff');
 
 export const get = async (req, res) => {
     try {
-        const staff = new Staff();
+        const staff = new User().as('staff');
         const staffs = await staff.readStaff();
 
         res.status(200).json(staffs);
@@ -25,7 +25,7 @@ export const post = async (req, res) => {
     }
 
     try {
-        const staff = new Staff(data);
+        const staff = new User(data).as('staff');
         const newStaff = await staff.register();
         debug(`new staff [${newStaff.data.hash}] created`);
         res.status(201).json(newStaff);

@@ -8,8 +8,9 @@ import { limiter } from '../../helpers';
 import * as authenticate from './';
 
 const route = express.Router();
-const timeout = 5 * 60 * 1000; // 5 min
+const timeout = 60 * 1000; // 1 min
 
-route.post('/login', [ limiter(3, timeout) ], authenticate.post);
+route.post('/login', [ limiter(100, timeout) ], authenticate.post);
+route.post('/logout', authenticate.postLogout);
 
 export { route as auth };

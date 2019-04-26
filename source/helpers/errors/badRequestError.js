@@ -1,4 +1,3 @@
-//Bad Request
 export class BadRequestError extends Error {
     constructor(...args) {
         super(...args);

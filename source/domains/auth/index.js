@@ -2,13 +2,13 @@
 import dg from 'debug';
 
 // Instruments
-import { Staff, Customers } from '../../controllers';
+import { User } from '../../controllers';
 import { UnauthorizedError } from '_@source/helpers/errors';
 
 const debug = dg('router:auth');
 
 export const post = async (req, res) => {
-    debug(`${req.method} — ${req.originalUrl}`);
+    debug(`${req.headers.authorization}`);
 
     try {
         if (!req.headers.authorization) {
@@ -20,7 +20,8 @@ export const post = async (req, res) => {
             .toString()
             .split(':');
 
-        const staff = new Staff({ email, password });
+        const user = new User({ email, password });
+        const staff = user.as('staff');
         const hashStaff = await staff.login();
 
         if (hashStaff) {
@@ -29,7 +30,7 @@ export const post = async (req, res) => {
             return res.sendStatus(204);
         }
 
-        const customer = new Customers({ email, password });
+        const customer = user.as('customer');
         const hashCustomer = await customer.login();
 
         if (hashCustomer) {
@@ -42,4 +43,10 @@ export const post = async (req, res) => {
     } catch (error) {
         throw new UnauthorizedError(error.message);
     }
+};
+
+export const postLogout = (req, res) => {
+    req.logout();
+
+    return res.sendStatus(204);
 };

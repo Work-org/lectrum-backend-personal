@@ -44,7 +44,7 @@ export class Customers {
     }
 
     async getCustomers() {
-        const query = this._query();
+        const query = this._queries();
         const data = await query;
 
         return data;
@@ -70,24 +70,30 @@ export class Customers {
         return result;
     }
 
-    _query (condition = {}) {
+    _queries (condition = {}) {
         return customers.find(condition)
-            .select('-password -_usr  -_id')
+            .select('-password  -_id')
+            .lean({virtuals: true});
+    }
+
+    _query (condition = {}) {
+        return customers.findOne(condition)
+            .select('-password  -_id')
             .lean({virtuals: true});
     }
 
     _update (data, hash) {
         const { name: { first, last }, emails, phones, city, country } = data;
 
-        return customers.updateOne({ hash }, {
-            $set: [
-                { 'name.first': first},
-                { 'name.last': last },
-                { emails },
-                { phones },
-                { city },
-                { country },
-            ],
+        return customers.findOneAndUpdate({ hash }, {
+            $set: {
+                'name.first': first,
+                'name.last':  last,
+                city,
+                country,
+                emails,
+                phones,
+            },
         });
     }
 }

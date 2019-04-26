@@ -73,31 +73,15 @@ app.use('*', (req, res, next) => {
     next(error);
 });
 
-if (process.env.NODE_ENV !== 'test') {
-    // eslint-disable-next-line no-unused-vars
-    app.use((error, req, res, next) => {
-        const { name, message, statusCode } = error;
-        const errorMessage = `${name}: ${message}`;
+// eslint-disable-next-line no-unused-vars
+app.use((error, req, res, next) => {
+    const { name, message, statusCode } = error;
+    const errorMessage = `${name}: ${message}`;
 
-        debug(`Error: ${errorMessage}`);
+    debug(`Error: ${errorMessage}`);
 
-        /*switch (error.name) {
-            case 'NotFoundError':
-                notFoundLogger.error(errorMessage);
-                break;
-
-            case 'ValidationError':
-                validationLogger.error(errorMessage);
-                break;
-
-            default:
-                errorLogger.error(errorMessage);
-                break;
-        }*/
-
-        const status = statusCode ? statusCode : 500;
-        res.status(status).json({ message: message });
-    });
-}
+    const status = statusCode ? statusCode : 500;
+    res.status(status).json({ message: message });
+});
 
 export { app };

@@ -19,8 +19,6 @@ const userFail = {
 describe('staff test', () => {
     beforeAll(authorize);
 
-    // afterAll(global.disconnectMongoMemory);
-
     test(' GET    staff      ', async (done) => {
         const response = await global.server.get('/api/staff');
         expect(response.statusCode).toBe(200);
@@ -49,5 +47,5 @@ describe('staff test', () => {
     });
 
     test.skip(' POST   staff 400 - not valid schema', () => {});
-    test.skip(' FET    staff 400 - not valid schema', () => {});
+    test.skip(' GET    staff 400 - not valid schema', () => {});
 });

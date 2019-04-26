@@ -18,11 +18,10 @@ schema.pre('save', async function (next) {
         const password = Math.random().toString(36)
             .slice(2);
 
-        console.log('--> password customer ', this.name.first, password);
         this.password = await bcrypt.hash(password, 11);
     }
 
     next();
 });
 
-export const customers = user.discriminator('customers', schema);
+export const customers = user.discriminator('customer', schema);

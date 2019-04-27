@@ -1,7 +1,9 @@
+// Instruments
 import {
     Orders as OrdersModel,
     Customers, Products,
 } from '../models';
+import { PurchaseError } from '_@source/helpers/errors';
 
 export class Orders {
     constructor(data) {
@@ -17,16 +19,16 @@ export class Orders {
 
         const customer = await this.models.customers.getById(uid);
         if (!customer) {
-            throw new Error('authorize error');
+            throw new PurchaseError(1, 'authorize error');
         }
 
         const product = await this.models.products.getById(pid);
         if (!product) {
-            throw new Error('Product not exist');
+            throw new PurchaseError(2, 'Product not exist');
         }
 
         if (count > product.total) {
-            throw new Error('Quantity exceeded');
+            throw new PurchaseError(3, 'Quantity exceeded');
         }
 
         const hash = await this.models.orders.create();
@@ -34,7 +36,7 @@ export class Orders {
         const productNew = await this.models.products.update();
 
         if (!productNew) {
-            throw new Error('Something wrong');
+            throw new PurchaseError(4, 'Something wrong');
         }
 
         return { data: { hash }};

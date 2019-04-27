@@ -22,7 +22,7 @@ export class Products {
     async getProduct (hash) {
         const data = await this.models.products.getOne(hash);
 
-        return data;
+        return { data };
     }
 
     async updateProduct (hash) {

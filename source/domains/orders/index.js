@@ -11,6 +11,16 @@ export const get = (req, res) => {
 export const post = (req, res) => {
     debug('post');
     res.status(200).json({ });
+    /*
+    * try {
+        const { uid, pid, count, comment } = req.body;
+        const product = new Products({ uid, pid, count, comment });
+    } catch (error) {
+        if (error.name = 'PurchaseError') {
+        
+        }
+    }
+    * */
 };
 
 export const getOrder = (req, res) => {

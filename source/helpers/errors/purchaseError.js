@@ -1,8 +1,9 @@
 export class PurchaseError extends Error {
     constructor(code, ...args) {
         super(...args);
+        const [ , statusCode = 400, data ] = args;
         this.purchaseErrorCode = code;
-        const [ , statusCode = 400 ] = args;
+        this.data = data;
 
         if (typeof statusCode !== 'number') {
             throw new Error('can not construct PurchaseError due to arguments error');

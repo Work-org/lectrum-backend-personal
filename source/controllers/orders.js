@@ -19,7 +19,7 @@ export class Orders {
 
         const customer = await this.models.customers.getById(uid);
         if (!customer) {
-            throw new PurchaseError(1, 'authorize error');
+            throw new PurchaseError(1, 'Customer not found');
         }
 
         const product = await this.models.products.getById(pid);
@@ -36,7 +36,7 @@ export class Orders {
         const productNew = await this.models.products.update();
 
         if (!productNew) {
-            throw new PurchaseError(4, 'Something wrong');
+            throw new PurchaseError(4, 'Something wrong, try again', 400, hash);
         }
 
         return { data: { hash }};
@@ -51,13 +51,13 @@ export class Orders {
     async getOrder (hash) {
         const data = await this.models.orders.getOne(hash);
 
-        return data;
+        return { data };
     }
 
     async updateOrder (hash) {
         const data = await this.models.orders.update(hash);
 
-        return data;
+        return { data };
     }
 
     async deleteOrder (hash) {

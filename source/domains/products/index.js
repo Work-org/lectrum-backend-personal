@@ -60,7 +60,7 @@ export const putProduct = async (req, res) => {
 
         const { title, description, price, discount, total } = req.body;
         const product = new Products({ title, description, price, discount, total });
-        const data = await product.updateProduct();
+        const data = await product.updateProduct(hash);
 
         res.status(200).json(data);
     } catch (error) {

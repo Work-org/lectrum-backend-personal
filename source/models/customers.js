@@ -27,7 +27,7 @@ export class Customers {
         return customer.hash;
     }
 
-    async createCustomer() {
+    async create() {
         const { name, email, phone, city, country } = this.data;
 
         const [ first, last ] = name.split(' ');
@@ -43,28 +43,35 @@ export class Customers {
         return hash;
     }
 
-    async getCustomers() {
+    async getMany() {
         const query = this._queries();
         const data = await query;
 
         return data;
     }
 
-    async getCustomer(hash) {
+    async getOne(hash) {
         const query = this._query({ hash });
         const data = await query;
 
         return data;
     }
 
-    async updateCustomer(hash) {
+    async getById(id) {
+        const query = this._query({ _id: id });
+        const data = await query;
+
+        return data;
+    }
+
+    async update(hash) {
         const update = this._update(this.data, hash);
         const data = await update;
 
         return data;
     }
 
-    async removeCustomer(hash) {
+    async remove(hash) {
         const result = await customers.deleteOne({ hash });
 
         return result;

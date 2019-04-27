@@ -39,7 +39,7 @@ export class User {
     }
 
     async readStaff() {
-        const reads = await this.model.getStaffs();
+        const reads = await this.model.getMany();
 
         return { data: reads };
     }
@@ -55,31 +55,31 @@ export class User {
     }
 
     async createCustomer() {
-        const data = await this.model.createCustomer();
+        const data = await this.model.create();
 
         return data;
     }
 
     async getCustomers() {
-        const data = await this.model.getCustomers();
+        const data = await this.model.getMany();
 
         return data;
     }
 
     async getCustomer(hash) {
-        const data = await this.model.getCustomer(hash);
+        const data = await this.model.getOne(hash);
 
         return data;
     }
 
     async updateCustomer(hash) {
-        const data = await this.model.updateCustomer(hash);
+        const data = await this.model.update(hash);
 
         return data;
     }
 
     async removeCustomer(hash) {
-        const data = await this.model.removeCustomer(hash);
+        const data = await this.model.remove(hash);
 
         return data;
     }
@@ -89,10 +89,10 @@ export class User {
 
         switch (this.type) {
             case 'staff':
-                user = await this.model.getStaff(hash);
+                user = await this.model.getOne(hash);
                 break;
             case 'customer':
-                user = await this.model.getCustomer(hash);
+                user = await this.model.getOne(hash);
                 break;
 
             default: throw new Error('Not correct type user');

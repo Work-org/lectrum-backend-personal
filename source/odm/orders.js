@@ -18,6 +18,8 @@ const schema = new Schema({
     count: {
         type:     Number,
         required: true,
+        min:      0,
+        max:      1000,
     },
     comment: {
         type:      String,

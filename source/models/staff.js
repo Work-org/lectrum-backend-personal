@@ -48,7 +48,7 @@ export class Staff {
         return user.hash;
     }
 
-    async getStaff (hash) {
+    async getOne (hash) {
         const staffs = await staff.findOne({hash})
             .select('-password -disabled -_id')
             .lean({virtuals: true});
@@ -56,7 +56,7 @@ export class Staff {
         return staffs;
     }
 
-    async getStaffs () {
+    async getMany () {
         const staffs = await staff.find({})
             .select('-password -disabled -_id')
             .lean({virtuals: true});

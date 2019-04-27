@@ -25,8 +25,15 @@ const schema = new Schema({
     total: {
         type:     Number,
         required: true,
+        default:  1,
     },
 });
+
+schema
+    .virtual('pid')
+    .get(function() {
+        return this.id;
+    });
 
 // Collection
 export const products = model('product', schema);

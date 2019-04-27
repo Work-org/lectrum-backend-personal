@@ -24,4 +24,10 @@ schema.pre('save', async function (next) {
     next();
 });
 
+schema
+    .virtual('uid')
+    .get(function() {
+        return this.id;
+    });
+
 export const customers = user.discriminator('customer', schema);
